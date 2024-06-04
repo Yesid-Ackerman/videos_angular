@@ -2,7 +2,7 @@
     <h1>Hola desde Labs</h1>
 <h2>{{welcome}}</h2>
 <ul>
-  <li *ngFor="let task of tasks">
+  <li *ngFor="let task of tasks()">
     {{task}}
   </li>
 </ul>
@@ -11,24 +11,58 @@
 <p>La suma de 3 + 3 es {{3 + 3}}</p>
 <p> Hola me llamo {{ nombre() }} y mi edad es {{ edad }}</p>
 <hr>
-<img [src]="[person.avatar]" alt="">
-<input type="number" [value]="[person.edad]">
+<img [src]="[person().avatar]" alt="">
+<input type="number" [value]="[person().edad]">
 <button [disabled]="disabled">Clic Me</button>
 <hr>
-<p>Person: {{[person.edad, person.nombre]}}</p>
+<p>Person: {{[person().edad, person().nombre]}}</p>
 <hr>
 
 <button (click)="clickHandler()">Click Me</button>
 <hr>
 <button (dblclick)="clickHandler()"> Double Click Me</button>
 <p>(change)</p>
-<input type="number" [value]="[person.edad]" (change)="changeHandle($event)">
-<input type="text" [value]="[person.nombre]" (change)="changeHandle($event)">
+<input type="number" [value]="[person().edad]" (change)="changeHandle($event)">
+<input type="text" [value]="[person().nombre]" (change)="changeHandle($event)">
 <p>keydown</p>
-<input type="text" [value]="[person.nombre]" (keydown)="keydowHandle($event)">
+<input type="text" [value]="[person().nombre]" (keydown)="keydowHandle($event)">
 <p>keydown shift</p>
-<input type="text" [value]="[person.nombre]" (keydown.shift.t)="clickHandler()">
+<input type="text" [value]="[person().nombre]" (keydown.shift.t)="clickHandler()">
+<hr/>
+<ul>
+  <p>Total: {{tasks().length}}</p>
+  <li *ngFor="let task of tasks(); index as i ">
+   {{i}} {{task}}
+  </li>
+</ul>
+<hr>
 <h1>Signal</h1>
 <input type="text" [value]="nombre()" (change)="changeHandle($event)">
 <p>Name: {{ nombre()}}</p>
+<p>Name: {{ nombre()}}</p>
+<hr/>
+<div *ngIf="1 !==1">
+  My Contend
+</div>
+<div *ngIf="nombre() === 'Yesith Jimenez'">
+  My Contend
+</div>
+<input type="number" [value]="[person().edad]" (change)="changeedad($event)">
+<div *ngIf="person().nombre === 'Yesith' && person().edad > 18; else elseblock">
+  Hola desde Condicion SI
+</div>
+<ng-template #elseblock >
+  Hola desde template
+</ng-template>
+<hr>
+<div [ngSwitch]="person().nombre">
+  <p *ngSwitchCase="'Yesith'"> Hola desde Yesith</p>
+  <p *ngSwitchCase="'Ana'"> Hola desde Ana</p>
+  <p *ngSwitchCase="'Juan'"> Hola desde Juan</p>
+  <p *ngSwitchDefault="'Hola desde Nadie'"></p>
+</div>
+<div>
+  <input type="color" [formControl]="colorCtrl">
+  <p>color: {{ colorCtrl.value }}</p>
+</div>
 </div>
