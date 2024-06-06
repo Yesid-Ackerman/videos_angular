@@ -64,5 +64,21 @@
 <div>
   <input type="color" [formControl]="colorCtrl">
   <p>color: {{ colorCtrl.value }}</p>
+  <svg>
+    <g>
+      <rect x="0" y="0" height="200" width="200" [attr.fill]="colorCtrl.value" />
+    </g>
+  </svg>
 </div>
+<hr>
+<input type="number" [formControl]="widthCtrl">
+<span class="box" [style.width.px]="widthCtrl.value"></span>
+<hr>
+<p>
+  <input type="text" [formControl]="namehCtrl"><br>
+  <span class="error" [class.active]="namehCtrl.invalid && namehCtrl.touched">Nombre Invalido</span>
+</p>
+<p>
+  <input type="text" name="" id="">
+</p>
 </div>

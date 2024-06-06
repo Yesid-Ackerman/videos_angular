@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {tasks} from './../../models/task.model'
+import {Task} from './../../models/task.model'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,8 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tasks = signal<tasks[]>([
+  tasks = signal<Task[]> ([
+
     {
       id: Date.now(),
       title: 'Crear Proyecto',
@@ -24,17 +25,18 @@ export class HomeComponent {
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [
-      Validators.required,
+      Validators.required,     
     ]
   });
 
   changeHandler(){
     if(this.newTaskCtrl.valid){
-      const value = this.newTaskCtrl.value;
-      this.addTask(value);
-      this.newTaskCtrl.setValue('');
-    }
-    
+      const value = this.newTaskCtrl.value.trim();
+      if(value!== ''){
+        this.addTask(value);
+        this.newTaskCtrl.setValue('');
+      }    
+    }    
   }
 
   addTask(title: string){
@@ -64,4 +66,19 @@ export class HomeComponent {
     })
    })
   }
+
+    updateTaskEditingMode(index: number){
+      this.tasks.update(prevState => {
+        return prevState.map((task, position)=>{
+            if(position === index){
+              return{
+                ...task,
+                editing:true
+              }
+            }
+            return task;
+        })
+      });
+    }
 }
+
